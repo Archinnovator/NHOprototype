@@ -503,9 +503,9 @@
             background-color: #0055aa;
         }
 
-        /* CHANGE: Made the virtual buddy tooltip display in two lines */
+        /* CHANGE: Made the virtual buddy tooltip always visible and used Red Hat font */
         .virtual-buddy-fab::after {
-            content: 'Ask your\A virtual buddy';
+            content: 'Ask your virtual buddy';
             position: absolute;
             bottom: 110%;
             left: 50%;
@@ -515,15 +515,14 @@
             padding: 8px 12px;
             border-radius: 6px;
             font-size: 1rem;
-            white-space: pre-line;
-            text-align: center;
-            line-height: 1.2;
-            opacity: 1; 
-            visibility: visible; 
+            white-space: nowrap;
+            opacity: 1; /* Always visible */
+            visibility: visible; /* Always visible */
             z-index: 1002;
-            font-family: 'Red Hat Display', sans-serif;
+            font-family: 'Red Hat Display', sans-serif; /* Use Red Hat font */
         }
         
+        /* CHANGE: New styles for the video overlay in Quest 1 */
         .video-container {
             position: relative;
             width: 100%;
@@ -536,7 +535,7 @@
         }
 
         .video-container video {
-            opacity: 0.4; 
+            opacity: 0.4; /* Dim the video to make the overlay readable */
         }
 
         .ceo-overlay {
@@ -556,15 +555,17 @@
             border-radius: 50%;
             border: 4px solid white;
             margin-bottom: 10px;
-            object-fit: cover;
+            object-fit: cover; /* Ensures the image covers the area without distortion */
         }
         
+        /* Overriding default h3 styles only within this context */
         .ceo-overlay h3 {
             margin: 10px 0 5px 0;
             font-family: 'Red Hat Display', sans-serif;
             color: #fff; 
             padding: 0; 
         }
+        /* Overriding default p styles only within this context */
         .ceo-overlay p {
             margin: 0;
             color: #f0f0f0;
@@ -699,8 +700,8 @@
 </div>
 <div class="main-content">
 <div class="puzzle-section">
-<div class="puzzle-title-wrapper"><img alt="Red Hat Logo" class="red-hat-logo hidden-logo" src="red-hat-fedora.png"/><h2 class="puzzle-title" id="puzzleTitle">Getting Started</h2></div><div class="puzzle-description" id="puzzleDescription"></div>
-<div class="fedora-puzzle" id="fedoraPuzzle"><img alt="Full Fedora Background" class="background-fedora" id="backgroundFedora" src="red-hat-fedora.png"/></div>
+<div class="puzzle-title-wrapper"><img alt="Red Hat Logo" class="red-hat-logo hidden-logo" src="red-hat-logo-.png"/><h2 class="puzzle-title" id="puzzleTitle">Getting Started</h2></div><div class="puzzle-description" id="puzzleDescription"></div>
+<div class="fedora-puzzle" id="fedoraPuzzle"><img alt="Full Fedora Background" class="background-fedora" id="backgroundFedora" src="red-hat-logo-.png"/></div>
 <div class="progress-section">
 <div class="progress-and-points">
 <span>Progress: <span id="progressText">0/14</span></span>
@@ -787,6 +788,7 @@
 
         const modules = {
             1: [
+                // CHANGE: Video quest configured with image overlay
                 { id: 'w1q1', title: 'Quest 1: Welcome to Red Hat!', description: 'A welcome video from our CEO.', content: [ `
                     <div class="video-container">
                         <div class="ceo-overlay">
@@ -799,6 +801,7 @@
                             Your browser does not support the video tag. Please ensure the video file is in the same folder as this HTML file.
                         </video>
                     </div>` ] },
+                // CHANGE: Updated content and structure for Workday quest
                 { id: 'w1q2', title: 'Quest 2: Workday Tasks', description: 'Complete your essential Workday setup.', content: [ `<p>Select the link in this section and navigate to "Go to My Tasks" to complete and then, (This will open in a new tab. Close it to return.)</p><a href="https://wd5.myworkday.com/redhat/d/home.htmld" target="_blank">Go to Workday</a>` ] },
                 { id: 'w1q3', title: 'Quest 3: Compliance Videos', description: 'Complete required compliance training.', content: [ `<p>Please complete the following required training modules.</p>`, `<a href="https://training-lms.redhat.com/lmt/clmsCourseDetails.prMain?in_sessionId=524018J955J54540&in_offeringId=55368763" target="_blank">Legal and Ethics Training</a>`, `<a href="https://training-lms.redhat.com/lmt/clmsCourseDetails.prMain?in_sessionId=524018J955J54540&in_offeringId=55368747" target="_blank">Data Privacy and Security</a>` ]},
                 { id: 'w1q4', title: 'Quest 4: Pay & Benefits', description: 'Learn about your compensation.', content: [ `<p>Explore your complete rewards portfolio.</p>`, `<a href="https://source.redhat.com/career/rewards_portfolio/benefits" target="_blank">Explore Pay & Benefits</a>` ]},
@@ -820,12 +823,7 @@
                 { id: 'w3q1', title: 'Quest 11: Enroll in NHCE', description: 'New Hire Cultural Experiences.', content: [ `<p>The New Hire Cultural Experience (NHCE) is a program designed to immerse you in Red Hat's culture, connecting you with leaders and other new hires. Use the link below to enroll in an upcoming session.</p>`, `<a href="https://training-lms.redhat.com/sso/saml/auth/rhlpint?RelayState=deeplinkrco%3D59586630" target="_blank">Enroll in NHCE Here</a>` ] },
                 { id: 'w3q2', title: 'Quest 12: Connection Programs', description: 'Connect with fellow Red Hatters.', content: [ "<p>Discover opportunities to connect with fellow Red Hatters through Link-Up events, ERG communities, and mentoring programs.</p>" ] },
                 { id: 'w3q3', title: 'Quest 13: Order Your Fedora!', description: 'Claim your iconic Red Hat.', content: [ "<p>Congratulations! You've completed your orientation and earned enough points to claim your iconic Red Hat Fedora!</p>", `<a href="${COOL_STUFF_STORE_URL}" target="_blank">Go to the Cool Stuff Store</a>` ] },
-                /* CHANGE: Replaced placeholder div with a video for Quest 14 */
-                { id: 'w3q4', title: 'Quest 14: The Show', description: 'From other Red Hatters.', content: [ `<h3>Learn what other new hires have to say about what comes next</h3>
-                    <video width="100%" controls autoplay muted loop>
-                        <source src="nho_testimonial.mp4" type="video/mp4">
-                        Your browser does not support the video tag. Please ensure the video file is in the same folder as this HTML file.
-                    </video>` ] }
+                { id: 'w3q4', title: 'Quest 14: The Show', description: 'From other Red Hatters.', content: [ `<h3>Learn what other new hires have to say about what comes next</h3> <div class="video-placeholder"><div class="video-placeholder-text">Past NHO Graduate Videos</div></div>` ] }
             ]
         };
         
