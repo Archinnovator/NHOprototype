@@ -93,7 +93,7 @@
         }
         .puzzle-piece {
             position: absolute;
-            background-image: url('images/red-hat-fedora.png'); /* CORRECTED PATH */
+            background-image: url('images/red-hat-fedora.png');
             background-size: 320px 240px;
             transition: all 0.8s ease-in-out;
             opacity: 0.5;
@@ -275,6 +275,16 @@
             color: #6c757d;
             line-height: 1.4;
         }
+        .quest10-congrats-message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ee0000; /* Red Hat Red */
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
         .progress-section {
             margin-top: 20px;
             text-align: center;
@@ -452,7 +462,6 @@
             transform: scale(1.1);
             background-color: #0055aa;
         }
-        /* UPDATED TOOLTIP CSS */
         .virtual-buddy-fab::after {
             content: 'Ask your\A virtual buddy';
             position: absolute;
@@ -632,8 +641,10 @@
     </div>
     <div class="main-content">
         <div class="puzzle-section">
-            <div class="puzzle-title-wrapper"><img alt="Red Hat Logo" class="red-hat-logo hidden-logo" src="images/red-hat-fedora.png"/><h2 class="puzzle-title" id="puzzleTitle">Getting Started</h2></div> <div class="puzzle-description" id="puzzleDescription"></div>
-            <div class="fedora-puzzle" id="fedoraPuzzle"><img alt="Full Fedora Background" class="background-fedora" id="backgroundFedora" src="images/red-hat-fedora.png"/></div> <div class="progress-section">
+            <div class="puzzle-title-wrapper"><img alt="Red Hat Logo" class="red-hat-logo hidden-logo" src="images/red-hat-fedora.png"/><h2 class="puzzle-title" id="puzzleTitle">Getting Started</h2></div>
+            <div class="puzzle-description" id="puzzleDescription"></div>
+            <div class="fedora-puzzle" id="fedoraPuzzle"><img alt="Full Fedora Background" class="background-fedora" id="backgroundFedora" src="images/red-hat-fedora.png"/></div>
+            <div class="progress-section">
                 <div class="progress-and-points">
                     <span>Progress: <span id="progressText">0/14</span></span>
                     <span>Points: <span id="pointsText">0</span></span>
@@ -710,7 +721,7 @@
         currentWeek: 1,
         completedModules: new Set(),
         currentPopup: null,
-        points: 0
+        points: 50
     };
 
     const TOTAL_MODULES = 14;
@@ -722,11 +733,13 @@
             { id: 'w1q1', title: 'Quest 1: Welcome to Red Hat!', description: 'A welcome video from our CEO.', content: [ `
                 <div class="video-container">
                     <div class="ceo-overlay">
-                        <img src="images/MattHicks.png" alt="Matt Hicks, CEO of Red Hat" class="ceo-image"> <h3>A Message from Matt Hicks</h3>
+                        <img src="images/MattHicks.png" alt="Matt Hicks, CEO of Red Hat" class="ceo-image">
+                        <h3>A Message from Matt Hicks</h3>
                         <p>President and CEO</p>
                     </div>
                     <video width="100%" controls autoplay muted loop>
-                        <source src="images/Red_Hat_Orientation_Video_Request.mp4" type="video/mp4"> Your browser does not support the video tag.
+                        <source src="images/Red_Hat_Orientation_Video_Request.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
                     </video>
                 </div>` ] },
             { id: 'w1q2', title: 'Quest 2: Workday Tasks', description: 'Complete your essential Workday setup.', content: [ `<p>Select the link in this section and navigate to "Go to My Tasks" to complete and then, (This will open in a new tab. Close it to return.)</p><a href="https://wd5.myworkday.com/redhat/d/home.htmld" target="_blank">Go to Workday</a>` ] },
@@ -750,22 +763,20 @@
             { id: 'w3q1', title: 'Quest 11: Enroll in NHCE', description: 'New Hire Cultural Experiences.', content: [ `<p>The New Hire Cultural Experience (NHCE) is a program designed to immerse you in Red Hat's culture, connecting you with leaders and other new hires. Use the link below to enroll in an upcoming session.</p>`, `<a href="https://training-lms.redhat.com/sso/saml/auth/rhlpint?RelayState=deeplinkrco%3D59586630" target="_blank">Enroll in NHCE Here</a>` ] },
             { id: 'w3q2', title: 'Quest 12: Connection Programs', description: 'Connect with fellow Red Hatters.', content: [ "<p>Discover opportunities to connect with fellow Red Hatters through Link-Up events, ERG communities, and mentoring programs.</p>" ] },
             { id: 'w3q3', title: 'Quest 13: Order Your Fedora!', description: 'Claim your iconic Red Hat.', content: [ "<p>Congratulations! You've completed your orientation and earned enough points to claim your iconic Red Hat Fedora!</p>", `<a href="${COOL_STUFF_STORE_URL}" target="_blank">Go to the Cool Stuff Store</a>` ] },
-            /* UPDATED QUEST 14 */
             { id: 'w3q4', title: 'Quest 14: The Show', description: 'From other Red Hatters.', content: [ `<h3>Learn what other new hires have to say about what comes next</h3>
                 <video width="100%" controls autoplay muted loop>
-                    <source src="images/nho_testimonial.mp4" type="video/mp4"> Your browser does not support the video tag.
+                    <source src="images/nho_testimonial.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
                 </video>` ] }
         ]
     };
 
     const allModulesInOrder = [].concat(...Object.values(modules).map(week => week));
-
     const weekDescriptions = {
         1: "Welcome to your first week! Complete the quests below to fill in the Fedora puzzle. The next quest is highlighted in green.",
         2: "Here we encourage you to build connections by taking advantage of our programs like our global communities of practice, LinkUp and more.",
         3: ""
     };
-
     const weekTitles = {
         1: "Getting Started",
         2: "Connect",
@@ -778,7 +789,6 @@
         const cols = 4;
         const pieceWidth = puzzle.clientWidth / cols;
         const pieceHeight = puzzle.clientHeight / 4;
-
         for (let i = 0; i < TOTAL_MODULES; i++) {
             const piece = document.createElement('div');
             piece.id = `piece-${i}`;
@@ -840,21 +850,16 @@
         const grid = document.getElementById('modulesGrid');
         grid.innerHTML = '';
         const weekModules = modules[gameState.currentWeek] || [];
-        
         const firstIncompleteModuleIndex = allModulesInOrder.findIndex(m => !gameState.completedModules.has(m.id));
-
         weekModules.forEach(module => {
             const card = document.createElement('div');
             card.className = 'module-card';
-
             const moduleIndex = allModulesInOrder.findIndex(m => m.id === module.id);
             let isUnlocked = (moduleIndex === 0) || (moduleIndex > 0 && gameState.completedModules.has(allModulesInOrder[moduleIndex - 1].id));
-
             if (gameState.completedModules.has(module.id)) {
                 card.classList.add('completed');
                 isUnlocked = true;
             }
-
             if (isUnlocked) {
                 card.classList.add('unlocked');
                 card.setAttribute('tabindex', '0');
@@ -865,7 +870,6 @@
                         openModule(module);
                     }
                 });
-
                 if (moduleIndex === firstIncompleteModuleIndex) {
                     card.classList.add('next-quest');
                 }
@@ -873,28 +877,24 @@
             
             card.innerHTML = `<div class="module-title">${module.title}</div><div class="module-description">${module.description}</div>`;
             grid.appendChild(card);
+            
+            if (module.id === 'w2q4' && gameState.completedModules.has('w2q4')) {
+                const congratsMessage = document.createElement('div');
+                congratsMessage.className = 'quest10-congrats-message';
+                congratsMessage.textContent = 'Congratulations on unlocking your Fedora!';
+                card.appendChild(congratsMessage);
+            }
         });
     }
 
     function setupWeekTabs() {
         const tabs = document.querySelectorAll('.week-tab');
         const descriptionEl = document.getElementById('puzzleDescription');
-        const bannerEl = document.getElementById('completionBanner');
         const puzzleTitleEl = document.getElementById('puzzleTitle');
-
         const updateWeekUI = (week) => {
             puzzleTitleEl.textContent = weekTitles[week];
             descriptionEl.textContent = weekDescriptions[week];
-            bannerEl.style.display = (week === 3) ? 'flex' : 'none';
-
-            if (week === 3) {
-                const fedoraImg = bannerEl.querySelector('img');
-                if (fedoraImg) {
-                    fedoraImg.classList.add('fully-visible');
-                }
-            }
         };
-
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 if (tab.classList.contains('locked')) return;
@@ -940,10 +940,8 @@
         const module = popup.module;
         const isCompleted = gameState.completedModules.has(module.id);
         const isLastPage = popup.currentPage === module.content.length - 1;
-
         document.getElementById('popupTitle').textContent = module.title;
         document.getElementById('popupText').innerHTML = module.content[popup.currentPage];
-        
         const pageIndicator = document.getElementById('pageIndicator');
         if (module.content.length > 1) {
             pageIndicator.textContent = `Page ${popup.currentPage + 1}/${module.content.length}`;
@@ -955,7 +953,6 @@
         const backBtn = document.getElementById('backBtn');
         const nextBtn = document.getElementById('nextBtn');
         const finishBtn = document.getElementById('finishBtn');
-
         backBtn.style.display = popup.currentPage > 0 ? 'inline-block' : 'none';
         nextBtn.style.display = !isLastPage ? 'inline-block' : 'none';
         finishBtn.style.display = (isLastPage && !isCompleted) ? 'inline-block' : 'none';
@@ -974,21 +971,17 @@
             modulePopupEl.style.display = 'none';
             gameState.currentPopup = null;
         };
-
         const closeIntroPopup = () => {
             introPopupEl.style.display = 'none';
         };
-
         closeBtn.addEventListener('click', closeModulePopup);
         introCloseBtn.addEventListener('click', closeIntroPopup);
-
         modulePopupEl.addEventListener('click', (e) => {
             if (e.target === modulePopupEl) closeModulePopup();
         });
         introPopupEl.addEventListener('click', (e) => {
             if (e.target === introPopupEl) closeIntroPopup();
         });
-
         backBtn.addEventListener('click', () => {
             if (gameState.currentPopup && gameState.currentPopup.currentPage > 0) {
                 gameState.currentPopup.currentPage--;
@@ -1005,7 +998,7 @@
             const moduleId = gameState.currentPopup.module.id;
             if (!gameState.completedModules.has(moduleId)) {
                 gameState.completedModules.add(moduleId);
-                gameState.points += POINTS_PER_QUEST;
+                // gameState.points += POINTS_PER_QUEST; // Points no longer increase
                 updatePointsDisplay();
                 revealPuzzlePiece();
                 checkWeekUnlocks();
@@ -1013,7 +1006,6 @@
             }
             closeModulePopup();
         });
-
         const startQuestBtn = document.getElementById('startQuestBtn');
         document.getElementById('coolStuffStoreLink').href = COOL_STUFF_STORE_URL;
         startQuestBtn.addEventListener('click', closeIntroPopup);
